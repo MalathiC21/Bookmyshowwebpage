@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Theatre Details | Book My Show</title>
+</head>
+<body>
+
+    <section class="theatre-section">
+        <div class="container">
+            <div class="row">
+                <h1>Theatre details</h1>
+            </div>
+        </div>
+    </section>
+
+    <script src="js/movies.js"></script>
+    <script src="js/theatres.js"></script>
+    <script type="module">
+    // import {theatresData} from "./js/theatres.js";
+    // import {moviesData} from "./js/movies.js";
+
+    const moviesDatas=moviesData;
+    const theatresDatas=theatresData;
+    
+    let urls = window.location;
+    let searchUrl = new URLSearchParams(urls.search);
+    // const getTheatreParams=searchUrl.get("movie");
+    console.log(searchUrl.get("movie"));
+    //  console.log(searchUrl.get("theatre"))
+
+    const findMovie = moviesDatas.find((item) => item.movieName === "aavesham");
+
+    const filterTheatres = theatresDatas.filter((item) => {
+        return  item.movieList.includes("aavesham");
+    })
+
+    const findTheatreByShowTime = [...filterTheatres].map((item)=>{
+
+        let getShows = item.screens.find((sc) => sc.movieName === "aavesham");
+        
+        return {
+            theatreId: item.id,
+            theatreName: item.theatreName,
+            location: item.location,
+            showTimes: getShows
+        }
+    })
+    console.log("Movie: ", findMovie)
+    console.log("Theatres By Show Time: ", findTheatreByShowTime)
+</script>
+</body>
+</html>
